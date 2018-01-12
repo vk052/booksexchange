@@ -13,7 +13,7 @@
 
   </head>
   <body>
-    <?php include('./views/nav.php'); ?>
+    <?php include('nav.php'); ?>
     <div class="container">
         <div class="col-md-12">
 

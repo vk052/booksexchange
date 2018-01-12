@@ -192,6 +192,7 @@ class User {
     if(mysqli_num_rows($result_set) > 0) {
       while($row = mysqli_fetch_array($result_set)) {
         $user = new User();
+       
         $user->setUser($row['id'], $row['username'], $row['password'], $row['email'], $row['Admin'], $row['address'], $row['lat'], $row['lng']);
         $users[] = $user;
       }

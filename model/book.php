@@ -5,22 +5,22 @@ class Book {
   private $autor;
   private $ownerID;
   private $ISBN;
-  private $price;
+  private $preis;
   protected static $db;
   public function __construct(){
     self::$db = new DBHelper();
   }
-  public function setBook($id, $author, $title, $ownerID, $price){
+  public function setBook($id, $autor, $titel, $ownerID, $preis){
     $this->id = $id;
-    $this->title = $titel;
-    $this->author = $autor;
+    $this->titel = $titel;
+    $this->autor = $autor;
     $this->ownerID = $ownerID;
     $this->ISBN = $ISBN;
-	$this->price = $price;
+	$this->preis = $preis;
   }
-  public function create($author, $title, $ownerID, $price){
-    $sql_query = "INSERT INTO `books`(`owner_id`, `autor`, `titel`, `ISBN`, `price`) ";
-    $sql_query .= "VALUES('" . $ownerID ."','" . $autor . "','" . $titel . "','" . $ISBN . "','" . $price . "')";
+  public function create($autor, $titel, $ownerID, $preis){
+    $sql_query = "INSERT INTO `books`(`owner_id`, `autor`, `titel`, `ISBN`, `preis`) ";
+    $sql_query .= "VALUES('" . $ownerID ."','" . $autor . "','" . $titel . "','" . $ISBN . "','" . $preis . "')";
     // run query
     $result = self::$db->query($sql_query);
     $errorText = mysqli_error(self::$db->conn);
@@ -37,12 +37,12 @@ class Book {
     }
     return $returnArray;
   }
-  public function update($id, $autor, $titel, $ownerID, $ISBN, $price){
-    $sql_query = "UPDATE `books` SET `title` = '" . $titel . "',
-      `author` = '" . $autor . "',
+  public function update($id, $autor, $titel, $ownerID, $ISBN, $preis){
+    $sql_query = "UPDATE `books` SET `titel` = '" . $titel . "',
+      `autor` = '" . $autor . "',
       `owner_id` = '" . $ownerID . "',
 	  `ISBN` = '" . $ISBN . "',
-      `price` = '" . $price . "'
+      `preis` = '" . $preis . "'
       WHERE `id` = " . $id;
     // run query
     $result = self::$db->query($sql_query);
@@ -76,7 +76,7 @@ class Book {
     $sql_query = "SELECT * FROM `books` WHERE `id` = " . $id;
     $result = self::$db->query($sql_query);
     $row = mysqli_fetch_array($result);
-    $book->setBook($row['id'], $row['autor'], $row['titel'], $row['owner_id'], $row['ISBN'], $row['price']);
+    $book->setBook($row['id'], $row['autor'], $row['titel'], $row['owner_id'], $row['ISBN'], $row['preis']);
     return $book;
   }
   public static function getAllBooks(){
@@ -86,7 +86,7 @@ class Book {
     if(mysqli_num_rows($result_set) > 0) {
       while($row = mysqli_fetch_array($result_set)) {
         $book = new Book();
-        $book->setBook($row['id'], $row['autor'], $row['titel'], $row['owner_id'], $row['ISBN'], $row['price']);
+        $book->setBook($row['id'], $row['autor'], $row['titel'], $row['owner_id'], $row['ISBN'], $row['preis']);
         $books[] = $book;
       }
     }
@@ -99,16 +99,16 @@ class Book {
     return $this->ownerID;
   }
   public function getTitle(){
-    return $this->title;
+    return $this->titel;
   }
   public function getAuthor(){
-    return $this->author;
+    return $this->autor;
   }
 	public function getISBN(){
     return $this->ISBN;
   }
   public function getPrice(){
-    return $this->price;
+    return $this->preis;
   }
   public function isMine($user){
     if ($user->getID() == $this->ownerID){
