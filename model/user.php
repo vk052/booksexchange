@@ -16,6 +16,14 @@ class User {
   private $email;
   // indicates if the user is an admin user (more rights)
   private $isAdmin;
+
+// address of the user - default: HdM
+  private $address = "Nobelstr. 10, 70569 Stuttgart";
+  // latitude
+  private $lat = 0.0;
+  // longitude
+  private $lng = 0.0;
+
   // database helper
   protected static $db;
   /**
@@ -35,12 +43,15 @@ class User {
   * @return void
   *
   */
-  public function setUser($id, $username, $password, $admin, $email){
+  public function setUser($id, $username, $password, $admin, $email, $address, $lat, $lng){
     $this->id = $id;
     $this->username = $username;
     $this->password = $password;
     $this->admin = $admin;
     $this->email = $email;
+    $this->address = $address;
+    $this->lat = $lat;
+    $this->lng = $lng;
   }
   /**
   *
@@ -54,9 +65,11 @@ class User {
   *               [1] string: message (to be displayed to user)
   *               [2] int: id of the row that has just been inserted
   */
-  public function create($username, $password, $admin, $email){
-    $sql_query = "INSERT INTO `user`(`username`, `password`, `admin`, `email`) ";
-    $sql_query .= "VALUES('". $username ."','" . $password ."','" . $admin . "','" . $email . "')";
+  public function create($id, $username, $password, $admin, $email,$address){
+    $lat = 0.0;
+    $lng = 0.0;
+    $sql_query = "INSERT INTO `user`(`username`, `password`, `admin`, `email`,`address`,`lat`,`lng`,) ";
+    $sql_query .= "VALUES('". $username ."','" . $password ."','" . $admin . "','" . $email . "','" . $address . "','" . $lat . "','" . $lng . "')";
     // run query
     $result = self::$db->query($sql_query);
     $errorText = mysqli_error(self::$db->conn);
@@ -85,11 +98,21 @@ class User {
   *               [0] boolean: true if creation was successful, else false
   *               [1] string: message (to be displayed to user)
   */
-  public function update($id, $username, $password, $admin, $email){
+  public function update($id, $username, $password, $admin, $email, $address){
+    $location['lat'] = 0.0;
+    $location['lng'] = 0.0;
+
+    include('helpers/maphelper.php');
+    $location = MapHelper::geoCode($address);
+
+
     $sql_query = "UPDATE `user` SET `username` = '" . $username . "',
       `password` = '" . $password . "',
       `admin` = '" . $admin . "',
-      `email` = '" . $email . "'
+      `email` = '" . $email . "',
+      `address` = '" . $address . "',
+      `lat` = '" . $lat . "',
+      `lng` = '" . $lng . "'
       WHERE `id` = " . $id;
     // run query
     $result = self::$db->query($sql_query);
@@ -136,7 +159,7 @@ class User {
     $sql_query = "SELECT * FROM `user` WHERE `id` = " . $id;
     $result = self::$db->query($sql_query);
     $row = mysqli_fetch_array($result);
-    $user->setUser($row['id'], $row['username'], $row['password'], $row['email'], $row['Admin']);
+    $user->setUser($row['id'], $row['username'], $row['password'], $row['email'], $row['Admin'], $row['address'], $row['lat'], $row['lng']);
     return $user;
   }
   /**
@@ -153,7 +176,7 @@ class User {
     $sql_query = "SELECT * FROM `user` WHERE `username` = '" . $username . "'";
     $result = self::$db->query($sql_query);
     $row = mysqli_fetch_array($result);
-    $user->setUser($row['id'], $row['username'], $row['password'], $row['email'], $row['Admin']);
+    $user->setUser($row['id'], $row['username'], $row['password'], $row['email'], $row['Admin'], $row['address'], $row['lat'], $row['lng']);
     return $user;
   }
   /**
@@ -169,7 +192,7 @@ class User {
     if(mysqli_num_rows($result_set) > 0) {
       while($row = mysqli_fetch_array($result_set)) {
         $user = new User();
-        $user->setUser($row['id'], $row['username'], $row['password'], $row['email'], $row['Admin']);
+        $user->setUser($row['id'], $row['username'], $row['password'], $row['email'], $row['Admin'], $row['address'], $row['lat'], $row['lng']);
         $users[] = $user;
       }
     }
@@ -232,6 +255,23 @@ class User {
       return false;
     }
   }
+
+
+  public function getAddress(){
+        return $this->address;
+      }
+    
+  public function getLat(){
+        return $this->lat;
+      }
+    
+  public function getLng(){
+        return $this->lng;
+      }
+    
+
+
+
   public function getEmail(){
     return $this->email;
   }

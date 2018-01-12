@@ -11,6 +11,13 @@
   <head>
     <title>User Form</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  
+  <style>
+    #map {
+    height: 400px;
+    width: 100%;
+  }
+  </style>
   </head>
   <body>
       <?php include('../nav.php'); ?>
@@ -39,6 +46,13 @@
               <input type="text" class="form-control" id="email" name="email" value="<?php echo $user->getEmail(); ?>">
               <input type="hidden" id="id" name="id" value="<?php echo $user->getID(); ?>">
             </div>
+
+            <div class="form-group">
+              <label for="address">Adresse:</label>
+              <input type="text" class="form-control" id="address" value="<?php echo $user->getAddress(); ?>">
+            </div>
+
+
             <div class="checkbox">
               <label><input type="checkbox" id="admin" name="admin" value="1" <?php if ($user->isAdmin()){ echo "checked"; }; ?>> Admin</label>
             </div>
@@ -47,10 +61,38 @@
 
               <button type="submit" class="btn btn-primary" name="btn-save"><?php echo $actionText ?></button>
             </div>
+
+            <?php
+             // show map only if lattitude and longitude are set...
+             if ($user->getLat() && $user->getLng()){
+             ?>
+               <div style="clear: both; margin: 10px;">&nbsp;</div>
+               <div id="map"></div>
+               <script>
+                 function initMap() {
+                   var uluru = {lat: <?php echo $user->getLat(); ?>, lng: <?php echo $user->getLng(); ?>};
+                   console.log(uluru);
+                   var map = new google.maps.Map(document.getElementById('map'), {
+                     zoom: 14,
+                     center: uluru
+                   });
+                   var marker = new google.maps.Marker({
+                     position: uluru,
+                     map: map
+                   });
+                 }
+               </script>
+               <script async defer
+               src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQeHKCuMwcfvqJHcYIKchF-j9j-NHpOBg&callback=initMap">
+               </script>
+             <?php } ?>
+
           </form>
         </div>
       </div>
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>  </body>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script> 
+      
+      </body>
 </html>

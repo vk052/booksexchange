@@ -36,6 +36,20 @@
       // here, we just process the $users-array that we just received
       require_once('./views/userList.php');
     }
+
+
+    /**
+      get a single user and show the details...
+     */
+     public function detailAction($id) {
+        // get user with ID $id
+        $user = User::getUser($id);
+        // now, we call the detail view.
+        require_once('views/userDetails.php');
+      }
+
+
+
     /**
       provide form to edit user...
     */
@@ -69,7 +83,7 @@
       // update the user
       // the variable $updateStatus is an array that contains
       // status information about the DB update
-      $updateStatus = $this->user->update($postarray['id'], $postarray['username'], $postarray['password'], $admin, $postarray['email']);
+      $updateStatus = $this->user->update($postarray['id'], $postarray['username'], $postarray['password'], $admin, $postarray['email'], $postarray['address']);
       // and read the user again - so we can show the changed user in the view
       $user = User::getUser($postarray['id']);
       // the messge is just the text in field 1 of the status array...
@@ -109,7 +123,7 @@
       // we create a new user in the database...
       // the variable $createStatus is an array that contains
       // status information about the DB update
-      $createStatus = $this->user->create($postarray['username'], $postarray['password'], $admin, $postarray['email']);
+      $createStatus = $this->user->create($postarray['username'], $postarray['password'], $admin, $postarray['email'], $postarray['address']);
       // If successfull insert
       $message = $createStatus[1];
       // creating the user was successful. We get the user
@@ -142,7 +156,7 @@
     public function loginAction(){
       // we only want to show the login-form and give it a nice title...
       $actionText = "Login";
-      require_once('../views/userLogin.php');
+      require_once('./views/userLogin.php');
     }
     /**
       Check login data
