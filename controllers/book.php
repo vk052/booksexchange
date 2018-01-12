@@ -62,7 +62,7 @@
       save a book that has just been entered
     */
     public function newAction($postarray){
-      $createStatus = $this->book->create($postarray['autor'], $postarray['titel'], $_SESSION['user']->getID(), $postarray['price']);
+      $createStatus = $this->book->create($postarray['autor'], $postarray['titel'], $_SESSION['user']->getID(), $postarray['preis']);
       // If successfull insert
       $message = $createStatus[1];
       if ($createStatus[0]){
@@ -72,7 +72,7 @@
       else {
         $book = new Book();
       }
-      require_once('../views/bookForm.php');
+      require_once('./views/bookForm.php');
     }
     /**
       Delete book

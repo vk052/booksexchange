@@ -29,7 +29,7 @@
               <label for="password">Password:</label>
               <input type="text" class="form-control" id="password" name="password" value="">
             </div>
-            <a class="btn btn-default" href="../index.php" role="button">Cancel</a>
+            <a class="btn btn-default" href="./index.php" role="button">Cancel</a>
             <button type="submit" class="btn btn-primary" name="btn-save"><?php echo $actionText ?></button>
           </form>
         </div>

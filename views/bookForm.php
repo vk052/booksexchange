@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   </head>
   <body>
-      <?php include('../nav.php'); ?>
+      <?php include('nav.php'); ?>
       <div class="container">
           <div class="col-md-12">
 
@@ -37,12 +37,12 @@
             <div class="form-group">
               <label for="email">ISBN:</label>
               <input type="text" class="form-control" id="ISBN" name="ISBN" value="<?php echo $book->getISBN(); ?>">
-              <input type="hidden" id="id" name="id" value="<?php echo $book->getID(); ?>">
+              <input type="text" id="id" name="id" value="<?php echo $book->getID(); ?>">
             </div>
 			  <div class="form-group">
               <label for="email">Price:</label>
               <input type="text" class="form-control" id="price" name="price" value="<?php echo $book->getPrice(); ?>">
-              <input type="hidden" id="id" name="id" value="<?php echo $book->getID(); ?>">
+              <input type="text" id="id" name="id" value="<?php echo $book->getID(); ?>">
             </div>
 
             <div class="float-right">

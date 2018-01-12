@@ -74,7 +74,7 @@
           </table>
           <?php if (isset($_SESSION['user'])){ ?>
           <div class="float-right">
-                <a class="btn btn-primary" href="" role="button">Add Book</a>
+                <a class="btn btn-primary" href="?controller=book&action=new" role="button">Add Book</a>
           </div>
           <?php
             }

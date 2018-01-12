@@ -45,7 +45,7 @@
         // get user with ID $id
         $user = User::getUser($id);
         // now, we call the detail view.
-        require_once('views/userDetails.php');
+        require_once('./views/userDetails.php');
       }
 
 
@@ -64,7 +64,7 @@
       $actionText = "Update User";
       // the form that displays the user that we want to change...
       // if we submit it, the content will be stored (database-update)
-      require_once('../views/userForm.php');
+      require_once('./views/userForm.php');
     }
     /**
       save a user that has been edited (update user)
@@ -148,7 +148,7 @@
       $message = $deleteStatus[1];
       // after deletion, show the list ...
       $users = User::getAllUsers();
-      require_once('../views/userList.php');
+      require_once('./views/userList.php');
     }
     /**
       Show user Form
@@ -191,7 +191,7 @@
         // ... we try again and display the error message...
         $actionText = "Login";
         $message = $loginStatus[1];
-        require_once('../views/userLogin.php');
+        require_once('./views/userLogin.php');
       }
     }
     /**
@@ -201,7 +201,7 @@
       // to log the user out, we delete the user object that was
       // stored in the session...
       unset($_SESSION['user']);
-      require_once('../views/userLogin.php');
+      require_once('./views/userLogin.php');
     }
   }
 ?>
