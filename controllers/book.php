@@ -20,7 +20,7 @@
     public function __construct(){
       // user always needs to be included...
       // make sure you do something like that in your index.php
-      require_once('../models/book.php');
+      require_once('./model/book.php');
       $this->book = new Book();
     }
     /**
@@ -28,7 +28,7 @@
     */
     public function indexAction() {
       $books = Book::getAllBooks();
-      require_once('../views/bookList.php');
+      require_once('./views/bookList.php');
     }
     /**
       provide form do edit user...
@@ -37,7 +37,7 @@
       $book = Book::getBook($id);
       $action = "save";
       $actionText = "Update Book";
-      require_once('../views/bookForm.php');
+      require_once('./views/bookForm.php');
     }
     /**
       save a book that has been edited
@@ -46,7 +46,7 @@
       $updateStatus = $this->book->update($postarray['id'], $postarray['autor'], $postarray['titel'], $_SESSION['user']->getID(), $postarray['price']);
       $book = $this->book->getBook($postarray['id']);
       $message = $updateStatus[1];
-      require_once('../views/bookForm.php');
+      require_once('./views/bookForm.php');
     }
     /**
       provide a form to create a new book ...
@@ -56,7 +56,7 @@
       $actionText = "Create Book";
       // create empty book...
       $book = new Book();
-      require_once('../views/bookForm.php');
+      require_once('./views/bookForm.php');
     }
     /**
       save a book that has just been entered
@@ -81,7 +81,7 @@
       $deleteStatus = $this->book->delete($id);
       $message = $deleteStatus[1];
       $books = $this->book->getAllBooks();
-      require_once('../views/bookList.php');
+      require_once('./views/bookList.php');
     }
   }
 ?>

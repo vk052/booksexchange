@@ -46,8 +46,8 @@
                 ?>
                   <tr <?php echo "class = " . $class; ?>>
                     <td><?php echo $book->getID() ?></td>
-                    <td><?php echo $book->getAutor() ?></td>
-                    <td><?php echo $book->getTitel() ?></td>
+                    <td><?php echo $book->getAuthor() ?></td>
+                    <td><?php echo $book->getTitle() ?></td>
                     <td><?php echo $book->getOwnerID() ?></td>
                     <td><?php echo $book->getISBN() ?></td>
 					  <td><?php echo $book->getPrice() ?></td>
